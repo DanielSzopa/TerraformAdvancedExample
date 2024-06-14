@@ -1,0 +1,14 @@
+services:
+  azureStorageAccount:
+    image: mcr.microsoft.com/azure-storage/azurite
+    command: azurite --blobPort 7777 --blobHost 0.0.0.0 --queuePort 7778 --queueHost 0.0.0.0 --tablePort 7779 --tableHost 0.0.0.0 -l /data
+    restart: always
+    ports:
+      - 7777:7777
+      - 7778:7778
+      - 7779:7779
+    volumes:
+      - azurite_data:/data
+
+volumes:
+  azurite_data:
