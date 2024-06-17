@@ -17,6 +17,8 @@
     <PackageReference Include="Microsoft.Azure.Functions.Worker.ApplicationInsights" Version="1.2.0" />
   </ItemGroup>
   <ItemGroup>
+    <InternalsVisibleTo Include="NewsletterSubscriberPublisher.UnitTests"/>
+    <InternalsVisibleTo Include="NewsletterSubscriberPublisher.IntegrationTests"/>
     <None Update="host.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
