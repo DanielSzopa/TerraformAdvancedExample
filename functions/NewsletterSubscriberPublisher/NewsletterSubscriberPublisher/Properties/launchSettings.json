@@ -2,8 +2,14 @@
   "profiles": {
     "NewsletterSubscriberPublisher": {
       "commandName": "Project",
-      "commandLineArgs": "--port 5000",
-      "launchBrowser": false
+      "commandLineArgs": "--port 5000"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "DockerfileRunArguments": "--init",
+      "httpPort": 5000,
+      "useSSL": false
     }
   }
 }
