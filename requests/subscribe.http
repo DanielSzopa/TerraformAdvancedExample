@@ -4,3 +4,14 @@ Content-Type: application/json
 {
     "email": "test@gmail.com"
 }
+
+// Integration tests requests
+
+###
+POST http://localhost:6666/api/subscribe
+Content-Type: application/json
+x-functions-key: test
+
+{
+    "email": "test@gmail.com"
+}
