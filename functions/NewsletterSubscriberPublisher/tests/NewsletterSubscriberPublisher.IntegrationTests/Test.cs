@@ -1,17 +1,23 @@
-﻿using DotNet.Testcontainers.Builders;
-using NewsletterSubscriberPublisher.IntegrationTests.Containers;
-
-namespace NewsletterSubscriberPublisher.IntegrationTests
+﻿namespace NewsletterSubscriberPublisher.IntegrationTests
 {
+    [Collection(nameof(TestsCollection))]
     public class Test
     {
+        public Test(TestsStartup testsStartup)
+        {
+            
+        }
+
         [Fact]
         public async Task test2()
         {
+           Assert.True(true);
+        }
 
-            var container = new ContainersStartup();
-            await container.StartAsync();
-            var test = "";
+        [Fact]
+        public async Task test3()
+        {
+            Assert.True(true);
         }
     }
 }
