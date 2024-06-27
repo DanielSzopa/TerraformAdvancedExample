@@ -2,7 +2,7 @@
 using DotNet.Testcontainers.Networks;
 using NewsletterSubscriberPublisher.IntegrationTests.Containers;
 
-namespace NewsletterSubscriberPublisher.IntegrationTests
+namespace NewsletterSubscriberPublisher.IntegrationTests.Setup
 {
     public class TestsStartup : IAsyncLifetime
     {

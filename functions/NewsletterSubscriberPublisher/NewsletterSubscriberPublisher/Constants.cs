@@ -1,8 +1,6 @@
-﻿using System.Text.RegularExpressions;
-
-namespace NewsletterSubscriberPublisher;
+﻿namespace NewsletterSubscriberPublisher;
 
 internal class Constants
 {
-    internal const string SubscribersQueue = "Subscribers";
+    internal const string SubscribersQueue = "subscribers";
 }

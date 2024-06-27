@@ -2,11 +2,14 @@
 using DotNet.Testcontainers.Containers;
 using DotNet.Testcontainers.Images;
 using DotNet.Testcontainers.Networks;
+using NewsletterSubscriberPublisher.IntegrationTests.Helpers;
 
 namespace NewsletterSubscriberPublisher.IntegrationTests.Containers;
 
 internal class Function
 {
+    internal static int FuncPort => 6666;
+
     private Function() { }
     private static async Task<IFutureDockerImage> CreateImageAsync()
     {
@@ -27,23 +30,21 @@ internal class Function
     {
         var image = await CreateImageAsync();
 
-        int funcPort = 6666;
-
         var container = new ContainerBuilder()
                 .WithName("newlettersubscriberpublisher_integration_tests")
                 .WithImage(image)
                 .WithEnvironment(new Dictionary<string, string>()
                 {
                     { "ASPNETCORE_ENVIRONMENT","Development" },
-                    { "ASPNETCORE_HTTP_PORTS",$"{funcPort}" },
-                    { "ASPNETCORE_URLS", $"http://+:{funcPort}" },
+                    { "ASPNETCORE_HTTP_PORTS",$"{FuncPort}" },
+                    { "ASPNETCORE_URLS", $"http://+:{FuncPort}" },
                     { "AzureWebJobsSecretStorageType", "files" },
-                    { "SubscribersQueueConnection", $"AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;DefaultEndpointsProtocol=http;BlobEndpoint=http://{azuriteIp}:{blobPort}/devstoreaccount1;QueueEndpoint=http://{azuriteIp}:{queuePort}/devstoreaccount1;TableEndpoint=http://{azuriteIp}:{tablePort}/devstoreaccount1;" }
+                    { "SubscribersQueueConnection", SubscribersQueueConnectionBuilder.Build(azuriteIp, blobPort, queuePort, tablePort) }
                 })
-                .WithPortBinding(funcPort, funcPort)
+                .WithPortBinding(FuncPort, FuncPort)
                 .WithResourceMapping(new FileInfo("host.json"), "/azure-functions-host/Secrets")
                 .WithNetwork(network)
-                .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(funcPort))
+                .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(FuncPort))
                 .Build();
 
         await container.StartAsync();
