@@ -39,10 +39,23 @@ namespace NewsletterSubscriberPublisher.IntegrationTests
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
-        [Fact]
-        public async Task test3()
+        [Theory]
+        [InlineData("test.com")]
+        [InlineData("test.test.com")]
+        public async Task HttpTrigger_WhenSentEmailIsInvalid_ShouldReturn400BadRequest_And_MessageShouldNotBeCreatedInQueue(string invalidEmail)
         {
-            Assert.True(true);
+            //arrange
+            var client = NewsletterSubscriberPublisherClient.Create();
+            var request = RequestMessage.BuildPost(invalidEmail);
+
+            //act
+            var response = await client.SendAsync(request);
+
+            //assert
+            bool queueExistence = await _queueClient.ExistsAsync();
+            using var scope = new AssertionScope();
+            queueExistence.Should().BeFalse();
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         public Task InitializeAsync() => Task.CompletedTask;
