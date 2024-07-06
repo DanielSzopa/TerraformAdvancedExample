@@ -5,6 +5,11 @@ Content-Type: application/json
     "email": "test@gmail.com"
 }
 
+###
+
+GET  http://localhost:5000/api/healthcheck
+
+
 // Integration tests requests
 
 ###
@@ -15,3 +20,8 @@ x-functions-key: test
 {
     "email": "test@gmail.com"
 }
+
+###
+
+GET  http://localhost:6666/api/healthcheck
+x-functions-key: test

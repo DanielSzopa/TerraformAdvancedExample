@@ -14,7 +14,7 @@ namespace NewsletterSubscriberPublisher.IntegrationTests.Setup
         {
             _network = await Network.CreateAsync();
             _azurite = await Azurite.CreateContainerAsync(_network);
-            _func = await Function.CreateContainerAsync(_network, azuriteIp: _azurite.IpAddress, blobPort: Azurite.BlobPort, queuePort: Azurite.QueuePort, tablePort: Azurite.TablePort);
+            _func = await Function.CreateContainerAsync(_azurite, _network, blobPort: Azurite.BlobPort, queuePort: Azurite.QueuePort, tablePort: Azurite.TablePort);
         }
 
         public async Task DisposeAsync()

@@ -13,8 +13,6 @@ internal class Azurite
     internal static int BlobPort => 9777;
     internal static int QueuePort => 9778;
     internal static int TablePort => 9779;
-       
-    internal static string? Ip { get; private set; }
 
     private static async Task<IFutureDockerImage> CreateImageAsync()
     {
@@ -48,8 +46,6 @@ internal class Azurite
                 .Build();
 
         await container.StartAsync();
-
-        Ip = container.IpAddress;
 
         return container;
     }

@@ -1,6 +1,5 @@
 ﻿using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Bogus;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using NewsletterSubscriberPublisher.IntegrationTests.Helpers;
@@ -12,7 +11,6 @@ namespace NewsletterSubscriberPublisher.IntegrationTests
     [Collection(nameof(TestsCollection))]
     public class NewsletterSubscriberPublisherTests : IAsyncLifetime
     {
-        private readonly Faker _faker = new Faker();
         private readonly QueueClient _queueClient = SubscribersQueueClient.Create();
 
         public NewsletterSubscriberPublisherTests(TestsStartup testsStartup)
@@ -20,12 +18,13 @@ namespace NewsletterSubscriberPublisher.IntegrationTests
             
         }
 
-        [Fact]
-        public async Task HttpTrigger_WhenSentEmailIsValid_ShouldReturn200Ok_And_MessageShouldBeCreatedInQueue()
+        [Theory]
+        [InlineData("test123@gmail.com")]
+        [InlineData("0.1@test.pl")]
+        public async Task HttpTrigger_WhenSentEmailIsValid_ShouldReturn200Ok_And_MessageShouldBeCreatedInQueue(string email)
         {
             //arrange
             var client = NewsletterSubscriberPublisherClient.Create();
-            var email = _faker.Person.Email;
             var request = RequestMessage.BuildPost(email);
              
             //act

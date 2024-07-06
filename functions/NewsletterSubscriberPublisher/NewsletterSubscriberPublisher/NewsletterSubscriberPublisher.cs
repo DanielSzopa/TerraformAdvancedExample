@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
@@ -24,6 +25,12 @@ namespace NewsletterSubscriberPublisher
             var email = new Email(dto.Email);
             _logger.LogInformation("C# HTTP trigger function processed a request.");
             return email;
+        }
+
+        [Function("HealthCheck")]
+        public IActionResult HealthCheck([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequest req)
+        {
+            return new OkObjectResult("Function is health!");
         }
     }
 }

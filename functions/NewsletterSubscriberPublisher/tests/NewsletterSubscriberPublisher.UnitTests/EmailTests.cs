@@ -23,7 +23,10 @@ public class EmailTests
 
     [Theory]
     [InlineData("test@gmail.com")]
+    [InlineData("test1.23@GMAIL.COM")]
+    [InlineData("test.test@gmail.com")]
     [InlineData("test123@gmail.com")]
+    [InlineData("0.1@test.pl")]
     public void Create_WhenValueInputIsValid_ShouldNotThrowInvalidEmailException(string email)
     {
         //act
